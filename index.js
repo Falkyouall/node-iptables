@@ -65,12 +65,12 @@ function iptables (rule) {
         cmd = 'sudo';
         args = ['iptables'].concat(args);
     }
-    console.log(cmd, args)
-    
+
     var proc = spawn(cmd, args);
     proc.stderr.on('data', function (buf) {
         console.error(buf.toString());
     });
+
     return proc;
 }
 
@@ -84,12 +84,12 @@ function iptablesArgs (rule) {
     if (rule.src) args = args.concat(["--src", rule.src]);
     if (rule.dst) args = args.concat(["--dst", rule.dst]);
     if (rule.sport) args = args.concat(["--sport", rule.sport]);
+    if (rule.quota) args = args.concat(["-m quota --quota", rule.quota]);
     if (rule.dport) args = args.concat(["--dport", rule.dport]);
     if (rule.in) args = args.concat(["-i", rule.in]);
     if (rule.out) args = args.concat(["-o", rule.out]);
     if (rule.target) args = args.concat(["-j", rule.target]);
     if (rule.list) args = args.concat(["-n", "-v"]);
-    if (rule.quota) args = args.concat(["-m quota --quota", rule.quota]);
 
     return args;
 }
