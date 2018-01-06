@@ -65,10 +65,11 @@ function iptables (rule) {
         cmd = 'sudo';
         args = ['iptables'].concat(args);
     }
-    console.log(args)
+    //console.log(args)
     var proc = spawn(cmd, args);
+    //console.log(proc.stdout.toString());
     proc.stderr.on('data', function (buf) {
-        console.error(buf.toString());
+        console.error("error ",buf.toString());
     });
 
     return proc;
